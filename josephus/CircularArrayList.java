@@ -8,7 +8,6 @@ public class CircularArrayList extends AbstractArrayList implements CircularColl
         super(elements);
     }
 
-
     public boolean isEmpty() {
         return size == 0;
     }

@@ -12,7 +12,11 @@ public abstract class AbstractArrayList implements Collectible {
     }
 
     protected AbstractArrayList(String[] elements) {
-        elements = new String[DEFAULT_MAX_SIZE];
+        // we specify "this" here to indicate that we mean the
+        // instance variable "elements" (which belongs to the object
+        // or instance of our list) and not the parameter
+        // String[] elements
+        this.elements = new String[DEFAULT_MAX_SIZE];
         arraySize = DEFAULT_MAX_SIZE;
         size = 0;
         for (String s : elements) {
@@ -41,6 +45,7 @@ public abstract class AbstractArrayList implements Collectible {
                 doubleElements[i] = elements[i];
             }
 
+            // don't forget to set the instance variable to the new array!
             elements = doubleElements;
 
             // ...and then you can add the new element like normal
