@@ -80,21 +80,22 @@ public class CircularArrayList extends AbstractArrayList implements CircularColl
 
     class CircularArrayListIterator implements CircularIterator {
         int currentIndex;
-        CircularArrayList arrayList;
 
         public CircularArrayListIterator() {
             currentIndex = 0;
         }
 
         public boolean hasNext() {
-            return arrayList.size() == 0;
+            return size == 0;
         }
 
         public String next() {
-            currentIndex++;
-            if (currentIndex >= size()) {
-                currentIndex -= size();
-            }
+            do {
+                currentIndex++;
+                if (currentIndex >= arraySize) {
+                    currentIndex -= arraySize;
+                }
+            } while (elements[currentIndex] == null);
             return elements[currentIndex];
         }
 
@@ -103,18 +104,17 @@ public class CircularArrayList extends AbstractArrayList implements CircularColl
             size--;
         }
 
-        public void removeKthElement(int k) {
-            int count = 0;
-            while (count != k) {
-                if (next() != null) {
-                    count++;
-                }
+        public String removeKthElement(int k) {
+            for (int i = 0; i < k; i++) {
+                next();
             }
-            elements[currentIndex] = null;
+            String kthElement = elements[currentIndex];
+            remove();
+            return kthElement;
         }
 
         public boolean oneElementLeft() {
-            return size() == 1;
+            return size == 1;
         }
     }
 

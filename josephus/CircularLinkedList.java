@@ -39,13 +39,14 @@ public class CircularLinkedList extends AbstractLinkedList implements CircularCo
     */
     public void remove(String s) {
         boolean removed = false;
-        for (int i = 0; i < size() && !removed; i++) {
+        Node current = first;
+        for (int i = 0; i < n && !removed; i++) {
             if (current.next.value == s) {
                 current.next = current.next.next;
                 n--;
                 removed = true;
             }
-            next();
+            current = current.next;
         }
     }
 
@@ -55,7 +56,14 @@ public class CircularLinkedList extends AbstractLinkedList implements CircularCo
     *  is true.
     */
     public void removeAll(String s) {
-       throw new UnsupportedOperationException();
+        Node current = first;
+        for (int i = 0; i < n; i++) {
+            if (current.next.value == s) {
+                current.next = current.next.next;
+                n--;
+            }
+            current = current.next;
+        }
     }
 
     public CircularIterator iterator() {
@@ -70,7 +78,7 @@ public class CircularLinkedList extends AbstractLinkedList implements CircularCo
         }
 
         public boolean hasNext() {
-            return size() == 0;
+            return n == 0;
         }
 
         public String next() {
@@ -78,15 +86,31 @@ public class CircularLinkedList extends AbstractLinkedList implements CircularCo
             return current.value;
         }
 
+        /** remove():
+         *  removes the last/previous element in the list
+         *  (i.e. removes the element that was returned by the
+         *  most recent call to next())
+         */
         public void remove() {
-
+            current.value = current.next.value;
+            current.next = current.next.next;
+            current = new Node(current, "");
+            n--;
         }
 
+        /** removeKth(int k):
+         *  iterates through the next k elements and removes
+         *  the kth one. The next call to removeKth would
+         *  start at the node after the removed node.
+         *  (i.e. kthNode.next)
+         */
         public String removeKthElement(int k) {
-            for (int i = 1; i < k; i++) {
+            for (int i = 0; i < k; i++) {
                 next();
             }
-            current.next = current.next.next;
+            String kthElement = current.next.value;
+            remove();
+            return kthElement;
         }
 
         public boolean oneElementLeft() {
