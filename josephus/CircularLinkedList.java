@@ -74,7 +74,7 @@ public class CircularLinkedList extends AbstractLinkedList implements CircularCo
         Node current;
 
         public CircularLinkedListIterator() {
-            current = first;
+            current = new Node(first, "");
         }
 
         public boolean hasNext() {
@@ -94,6 +94,9 @@ public class CircularLinkedList extends AbstractLinkedList implements CircularCo
         public void remove() {
             current.value = current.next.value;
             current.next = current.next.next;
+            if (first.value == current.value) {
+                first = current;
+            }
             current = new Node(current, "");
             n--;
         }
@@ -108,7 +111,7 @@ public class CircularLinkedList extends AbstractLinkedList implements CircularCo
             for (int i = 0; i < k; i++) {
                 next();
             }
-            String kthElement = current.next.value;
+            String kthElement = current.value;
             remove();
             return kthElement;
         }

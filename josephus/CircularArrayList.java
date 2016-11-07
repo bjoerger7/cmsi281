@@ -42,7 +42,9 @@ public class CircularArrayList extends AbstractArrayList implements CircularColl
     }
 
     public String first() {
-        return elements[0];
+        int i;
+        for (i = 0; elements[i] == null || i < size; i++);
+        return elements[i];
     }
 
     /** remove(String s):
@@ -81,7 +83,7 @@ public class CircularArrayList extends AbstractArrayList implements CircularColl
         int currentIndex;
 
         public CircularArrayListIterator() {
-            currentIndex = 0;
+            currentIndex = -1;
         }
 
         public boolean hasNext() {
@@ -98,11 +100,22 @@ public class CircularArrayList extends AbstractArrayList implements CircularColl
             return elements[currentIndex];
         }
 
+        /** remove():
+         *  removes the last/previous element in the list
+         *  (i.e. removes the element that was returned by the
+         *  most recent call to next())
+         */
         public void remove() {
             elements[currentIndex] = null;
             size--;
         }
 
+        /** removeKth(int k):
+         *  iterates through the next k elements and removes
+         *  the kth one. The next call to removeKth would
+         *  start at the node after the removed node.
+         *  (i.e. kthNode.next)
+         */
         public String removeKthElement(int k) {
             for (int i = 0; i < k; i++) {
                 next();
