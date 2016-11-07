@@ -1,7 +1,9 @@
 public class CircularLinkedList extends AbstractLinkedList implements CircularCollectible {
+    Node last;
 
     public CircularLinkedList() {
         super();
+        last = null;
     }
 
     public CircularLinkedList(String[] elements) {
@@ -10,15 +12,20 @@ public class CircularLinkedList extends AbstractLinkedList implements CircularCo
 
 
     public boolean isEmpty() {
-        throw new UnsupportedOperationException();
+        return n == 0;
     }
 
     public int size() {
-        throw new UnsupportedOperationException();
+        return n;
     }
 
     public void add(String s) {
-        throw new UnsupportedOperationException();
+        first = new Node(first, s);
+        if (size() == 0) {
+            last = first;
+        }
+        last.next = first;
+        n++;
     }
 
     public String first() {
@@ -26,21 +33,29 @@ public class CircularLinkedList extends AbstractLinkedList implements CircularCo
     }
 
     /** remove(String s):
-     *  removes the first element in the list for which
-     *      element.equals(s)
-     *  is true.
-     */
+    *  removes the first element in the list for which
+    *      element.equals(s)
+    *  is true.
+    */
     public void remove(String s) {
-        throw new UnsupportedOperationException();
+        boolean removed = false;
+        for (int i = 0; i < size() && !removed; i++) {
+            if (current.next.value == s) {
+                current.next = current.next.next;
+                n--;
+                removed = true;
+            }
+            next();
+        }
     }
 
     /** removeAll(String s):
-     *  removes all elements in the list for which
-     *      element.equals(s)
-     *  is true.
-     */
+    *  removes all elements in the list for which
+    *      element.equals(s)
+    *  is true.
+    */
     public void removeAll(String s) {
-        throw new UnsupportedOperationException();
+       throw new UnsupportedOperationException();
     }
 
     public CircularIterator iterator() {
@@ -48,41 +63,34 @@ public class CircularLinkedList extends AbstractLinkedList implements CircularCo
     }
 
     class CircularLinkedListIterator implements CircularIterator {
-        
+        Node current;
+
         public CircularLinkedListIterator() {
-            throw new UnsupportedOperationException();
+            current = first;
         }
 
         public boolean hasNext() {
-            throw new UnsupportedOperationException();
+            return size() == 0;
         }
 
         public String next() {
-            throw new UnsupportedOperationException();
+            current = current.next;
+            return current.value;
         }
 
-        /** remove():
-         *  removes the last/previous element in the list
-         *  (i.e. removes the element that was returned by the
-         *  most recent call to next())
-         */
         public void remove() {
-            throw new UnsupportedOperationException();
+
         }
 
-        /** removeKth(int k):
-         *  iterates through the next k elements and removes
-         *  the kth one. The next call to removeKth would
-         *  start at the node after the removed node.
-         *  (i.e. kthNode.next)
-         */
-        public void removeKthElement(int k) {
-            throw new UnsupportedOperationException();
+        public String removeKthElement(int k) {
+            for (int i = 1; i < k; i++) {
+                next();
+            }
+            current.next = current.next.next;
         }
 
         public boolean oneElementLeft() {
-            throw new UnsupportedOperationException();
+            return n == 1;
         }
     }
 }
-

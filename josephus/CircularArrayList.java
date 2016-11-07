@@ -10,37 +10,68 @@ public class CircularArrayList extends AbstractArrayList implements CircularColl
 
 
     public boolean isEmpty() {
-        throw new UnsupportedOperationException();
+        return size == 0;
     }
 
     public int size() {
-        throw new UnsupportedOperationException();
+        return size;
     }
 
     public void add(String s) {
-        throw new UnsupportedOperationException();
+        // if you still have room in your static array
+        if (size < arraySize) {
+            // you can just add it like normal
+            elements[size] = s;
+            size++;
+        } else {
+            // otherwise...
+            // you have to double the array to make more space
+            arraySize = arraySize * 2;
+            String[] doubleElements = new String[arraySize];
+
+            // and then copy the elements over one by one...
+            for (int i = 0; i < size; i++) {
+                doubleElements[i] = elements[i];
+            }
+
+            elements = doubleElements;
+
+            // ...and then you can add the new element like normal
+            elements[size] = s;
+            size++;
+        }
     }
-    
+
     public String first() {
-      return elements[0];
+        return elements[0];
     }
 
     /** remove(String s):
-     *  removes the first element in the list for which
-     *      element.equals(s)
-     *  is true.
-     */
+    *  removes the first element in the list for which
+    *      element.equals(s)
+    *  is true.
+    */
     public void remove(String s) {
-        throw new UnsupportedOperationException();
+        boolean removed = false;
+        for (int i = 0; i < size && !removed; i++) {
+            if (elements[i] == s) {
+                elements[i] = null;
+                removed = true;
+            }
+        }
     }
 
     /** removeAll(String s):
-     *  removes all elements in the list for which
-     *      element.equals(s)
-     *  is true.
-     */
+    *  removes all elements in the list for which
+    *      element.equals(s)
+    *  is true.
+    */
     public void removeAll(String s) {
-        throw new UnsupportedOperationException();
+        for (int i = 0; i < size; i++) {
+            if (elements[i] == s) {
+                elements[i] = null;
+            }
+        }
     }
 
     public CircularIterator iterator() {
@@ -48,40 +79,42 @@ public class CircularArrayList extends AbstractArrayList implements CircularColl
     }
 
     class CircularArrayListIterator implements CircularIterator {
+        int currentIndex;
+        CircularArrayList arrayList;
 
         public CircularArrayListIterator() {
-            throw new UnsupportedOperationException();
+            currentIndex = 0;
         }
-        
+
         public boolean hasNext() {
-            throw new UnsupportedOperationException();
+            return arrayList.size() == 0;
         }
 
         public String next() {
-            throw new UnsupportedOperationException();
+            currentIndex++;
+            if (currentIndex >= size()) {
+                currentIndex -= size();
+            }
+            return elements[currentIndex];
         }
 
-        /** remove():
-         *  removes the last/previous element in the list
-         *  (i.e. removes the element that was returned by the
-         *  most recent call to next())
-         */
         public void remove() {
-            throw new UnsupportedOperationException();
+            elements[currentIndex] = null;
+            size--;
         }
 
-        /** removeKth(int k):
-         *  iterates through the next k elements and removes
-         *  the kth one. The next call to removeKth would
-         *  start at the node after the removed node.
-         *  (i.e. kthNode.next)
-         */
-        public String removeKthElement(int k) {
-            throw new UnsupportedOperationException();
+        public void removeKthElement(int k) {
+            int count = 0;
+            while (count != k) {
+                if (next() != null) {
+                    count++;
+                }
+            }
+            elements[currentIndex] = null;
         }
 
         public boolean oneElementLeft() {
-            throw new UnsupportedOperationException();
+            return size() == 1;
         }
     }
 
