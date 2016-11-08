@@ -10,14 +10,12 @@ public class JosephusSolver {
     for (CircularIterator i = arrayList.iterator(); !i.oneElementLeft(); ) {
         i.removeKthElement(k1);
     }
-    System.out.println(arrayList.first());
     assert arrayList.first() == "Rugrat";
 
     CircularLinkedList linkedList = new CircularLinkedList(test1);
     for (CircularIterator i = linkedList.iterator(); !i.oneElementLeft(); ) {
         i.removeKthElement(k1);
     }
-    System.out.println(linkedList.first());
     assert linkedList.first() == "Rugrat";
   }
 }
