@@ -33,6 +33,7 @@ public class CircularArrayList extends AbstractArrayList implements CircularColl
                 doubleElements[i] = elements[i];
             }
 
+            // don't forget to set the instance variable to the new array!
             elements = doubleElements;
 
             // ...and then you can add the new element like normal
@@ -83,7 +84,7 @@ public class CircularArrayList extends AbstractArrayList implements CircularColl
         int currentIndex;
 
         public CircularArrayListIterator() {
-            currentIndex = -1;
+            currentIndex = 0;
         }
 
         public boolean hasNext() {
@@ -108,6 +109,7 @@ public class CircularArrayList extends AbstractArrayList implements CircularColl
         public void remove() {
             elements[currentIndex] = null;
             size--;
+            next();
         }
 
         /** removeKth(int k):
@@ -117,7 +119,7 @@ public class CircularArrayList extends AbstractArrayList implements CircularColl
          *  (i.e. kthNode.next)
          */
         public String removeKthElement(int k) {
-            for (int i = 0; i < k; i++) {
+            for (int i = 1; i < k; i++) {
                 next();
             }
             String kthElement = elements[currentIndex];
