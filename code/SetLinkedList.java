@@ -7,6 +7,7 @@ public LinkedListSet {
         n = 0;
     }
 
+    // this is O(n)
     public void add(String s) {
         if (!this.isDupe(s)) {
             first = new Node(first, s);
@@ -14,6 +15,7 @@ public LinkedListSet {
         }
     }
 
+    // this is O(n)
     public boolean isDupe(String s) {
         for (Node n = first; n != null; n = n.next) {
             if (n.value.equals(s)) {
@@ -23,6 +25,7 @@ public LinkedListSet {
         return false;
     }
 
+    // this is O(n)
     public void remove(String s) {
         for (Node n = new Node(first, null); n.next != null; n = n.next) {
             if (n.next.value.equals(s)) {
